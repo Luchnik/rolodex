@@ -8,14 +8,11 @@ class App extends React.Component {
     this.state = {
       text: 'Hello world'
     }
-
-    this.buttonHandler = this.buttonHandler.bind(this);
   }
 
-  buttonHandler() {
-    console.warn(this);
+  buttonHandler = () => {
     this.setState({
-      text: 'Different'
+      text: 'Different !!!'
     });
   }
 
