@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { CardList } from './components/card-list/card-list.component';
+import { SearchBox } from './components/search-box/search-box.component'; 
 import './App.css';
 
 class App extends React.Component {
@@ -8,7 +9,8 @@ class App extends React.Component {
     super();
 
     this.state = {
-      monsters: []
+      monsters: [],
+      searchField: '',
     }
   }
 
@@ -23,11 +25,18 @@ class App extends React.Component {
   }
 
   render() {
-    const { monsters } = this.state;
+    const { monsters, searchField } = this.state;
+    const filtedMonsters = monsters.filter(monster => {
+      return monster.name.toLowerCase().includes(searchField.toLowerCase());
+    });
 
     return (
-      <div>
-        <CardList monsters={monsters} />
+      <div className="app-container">
+        <SearchBox
+          placeholder="Search monster"
+          onSearchBoxChange={e => this.setState({ searchField: e.target.value })}
+        />
+        <CardList monsters={filtedMonsters} />
       </div>
     )
   }
