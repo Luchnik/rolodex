@@ -1,4 +1,6 @@
 import React from 'react';
+
+import { CardList } from './components/card-list/card-list.component';
 import './App.css';
 
 class App extends React.Component {
@@ -6,24 +8,27 @@ class App extends React.Component {
     super();
 
     this.state = {
-      text: 'Hello world'
+      monsters: []
     }
   }
 
-  buttonHandler = () => {
-    this.setState({
-      text: 'Different !!!'
-    });
+  componentDidMount() {
+    const monstersRequest = fetch('https://jsonplaceholder.typicode.com/users');
+
+    monstersRequest
+      .then(response => response.json())
+      .then(data => this.setState({
+        monsters: data
+      }));
   }
 
   render() {
-    const { text } = this.state;
+    const { monsters } = this.state;
 
     return (
-      <React.Fragment>
-        <p>{text}</p>
-        <button onClick={this.buttonHandler}>click</button>
-      </React.Fragment>
+      <div>
+        <CardList monsters={monsters} />
+      </div>
     )
   }
 }
